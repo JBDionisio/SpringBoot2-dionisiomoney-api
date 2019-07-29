@@ -2,6 +2,7 @@ package com.example.dionisiomoney.api.resource;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,8 +42,10 @@ public class CategoryResource {
 	}
 	
 	@GetMapping("/{id}")
-	public Category findById(@PathVariable Long id) {
-		return categoryRepository.findById(id).get();
+	public ResponseEntity<Category> findById(@PathVariable Long id) {
+		Optional<Category> categoryOptional = categoryRepository.findById(id);
+		
+		return categoryOptional.isPresent() ? ResponseEntity.ok(categoryOptional.get()) : ResponseEntity.notFound().build();
 	}
 	
 }
