@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class CategoryResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Category> save(@RequestBody Category category, HttpServletResponse response) {
+	public ResponseEntity<Category> save(@Valid @RequestBody Category category, HttpServletResponse response) {
 		Category savedCategory = categoryRepository.save(category);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
