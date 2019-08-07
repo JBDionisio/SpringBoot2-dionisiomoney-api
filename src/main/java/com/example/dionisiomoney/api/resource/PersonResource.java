@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ import com.example.dionisiomoney.api.repository.PersonRepository;
 public class PersonResource {
 
 	@Autowired
-	PersonRepository personRepository;
+	private PersonRepository personRepository;
 	
 	@GetMapping
 	public List<Person> findAll() {
@@ -32,7 +33,7 @@ public class PersonResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Person> save(@RequestBody Person person, HttpServletResponse response){
+	public ResponseEntity<Person> save(@Valid @RequestBody Person person, HttpServletResponse response) {
 		Person savedPerson = personRepository.save(person); 
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
