@@ -1,5 +1,6 @@
 package com.example.dionisiomoney.api.model;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,8 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "person")
+public class Person {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,17 +21,38 @@ public class Category {
 	@Size(max = 50)
 	private String name;
 	
+	@NotNull
+	private Boolean active;
+	
+	@Embedded
+	private Address address;
+
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	@Override
@@ -40,7 +62,7 @@ public class Category {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -49,7 +71,7 @@ public class Category {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Person other = (Person) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -57,4 +79,5 @@ public class Category {
 			return false;
 		return true;
 	}
+		
 }

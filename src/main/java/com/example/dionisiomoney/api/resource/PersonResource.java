@@ -17,36 +17,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.dionisiomoney.api.model.Category;
-import com.example.dionisiomoney.api.repository.CategoryRepository;
+import com.example.dionisiomoney.api.model.Person;
+import com.example.dionisiomoney.api.repository.PersonRepository;
 
 @RestController
-@RequestMapping("/categories")
-public class CategoryResource {
+@RequestMapping("/people")
+public class PersonResource {
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	private PersonRepository personRepository;
 	
 	@GetMapping
-	public List<Category> listAll() {
-		return categoryRepository.findAll();
+	public List<Person> findAll() {
+		return personRepository.findAll();
 	}
 	
 	@PostMapping
-	public ResponseEntity<Category> save(@Valid @RequestBody Category category, HttpServletResponse response) {
-		Category savedCategory = categoryRepository.save(category);
+	public ResponseEntity<Person> save(@Valid @RequestBody Person person, HttpServletResponse response) {
+		Person savedPerson = personRepository.save(person); 
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}")
-				.buildAndExpand(savedCategory.getId()).toUri();
-		
-		return ResponseEntity.created(uri).body(savedCategory);
+				.buildAndExpand(savedPerson.getId()).toUri();
+		return ResponseEntity.created(uri).body(savedPerson);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Category> findById(@PathVariable Long id) {
-		Optional<Category> categoryOptional = categoryRepository.findById(id);
+	public ResponseEntity<Person> findById(@PathVariable Long id) {
+		Optional<Person> personOptional = personRepository.findById(id);
 		
-		return categoryOptional.isPresent() ? ResponseEntity.ok(categoryOptional.get()) : ResponseEntity.notFound().build();
+		return personOptional.isPresent() ? ResponseEntity.ok(personOptional.get()) : ResponseEntity.notFound().build();
 	}
 	
 }
